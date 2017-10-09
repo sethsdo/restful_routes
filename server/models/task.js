@@ -5,7 +5,7 @@ const mongoose = require('mongoose')
 const TaskSchema = new mongoose.Schema({
     title: { type: String, required: true, minlength: 2 },
     desc: { type: String, required: true, minlength: 2 },
-    completed: { type: Boolean, required: false, default: false }
+    completed: { type: Boolean, required: true }
 }, { timestamps: true })
 
 const Task = mongoose.model('Task', TaskSchema)

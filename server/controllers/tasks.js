@@ -7,7 +7,7 @@ const Task = mongoose.model('Task')
 module.exports = {
     show: function (req, res) {
         const task = Task.find({}).exec(function (err, task) {
-            console.log(task)
+            //console.log(task)
             if (err) { console.log("something went wrong!") }
             res.send(task)
         })
@@ -24,22 +24,18 @@ module.exports = {
         })
     },
     update: function (req, res) {
-        const task = Task.findById({ _id: req.params._id }).exec(function (err, task) {
+        const task = Task.findOne({ _id: req.params.id }).exec(function (err, task) {
             if (err) { console.log("something went wrong!") }
             else {
-                task.title = req.params.title || task.title;
-                task.desc = req.parms.desc || task.desc;
-                task.completed = req.params.completed || task.completed;
-
+                task.completed = req.params.boolean;
+                console.log(task.completed)
                 task.save((err, task) => {
                     if (err) {
                         res.status(500).send(err)
                     }
-                    res.status(200).send(task);
+                    res.redirect("/")
                 });
-
             }
-            res.send(task)
         })
     },
     remove: function (req, res) {
